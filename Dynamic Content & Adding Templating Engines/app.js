@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.set('view engine', 'pug')//allows to set any value globally on our app
+app.set('view engine', 'ejs')//allows to set any value globally on our app
 // app.set('views', 'views') // in case we are storing our views in a differently named file
 
 const adminData = require('./routes/admin');
