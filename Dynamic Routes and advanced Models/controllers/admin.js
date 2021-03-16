@@ -19,7 +19,7 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getEditProduct = (req, res, next) => {
-  const editMode = req.query.edit;
+  const editMode = req.query.edit; // accessing keys in query parameters always as a string
   if (!editMode) {
     return res.redirect('/');
   }
