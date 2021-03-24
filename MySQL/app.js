@@ -19,6 +19,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+
+//routes
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
@@ -50,7 +52,7 @@ User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
-  // .sync({ force: true }) to override table
+  // .sync({ force: true }) 
   .sync()  //syncs models and relations to DB
   .then(result => {
     return User.findByPk(1);
