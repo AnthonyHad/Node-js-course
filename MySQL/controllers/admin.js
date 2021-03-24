@@ -1,4 +1,4 @@
-const Product = require('../models/product');
+const Product = require('../models/product'); // importing product model
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -19,7 +19,7 @@ exports.postAddProduct = (req, res, next) => {
       price: price,
       imageUrl: imageUrl,
       description: description,
-    }) //thanks to Sequelize relations
+    }) //thanks to Sequelize associations
   // Product.create({
   //   title: title,
   //   price: price,
@@ -50,7 +50,6 @@ exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   req.user
     .getProducts({where: { id: prodId } })
-  Product.findByPk(prodId)
     .then(products => {
       const product = products[0];
       if (!product) {
@@ -120,5 +119,4 @@ exports.postDeleteProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch(err => console.log(err));
-  res.redirect('/admin/products');
 };

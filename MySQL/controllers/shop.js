@@ -16,7 +16,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  // Product.findAll({ where: { id: prodId } })
+  // Product.findAll({ where: { id: prodId } }) it returns an array of products
   //   .then(products => {
   //     res.render('shop/product-detail', {
   //       product: products[0],

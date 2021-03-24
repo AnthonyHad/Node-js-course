@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
+
+//models
 const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
@@ -23,10 +25,10 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
+app.use((req, res, next) => { //middleware guaranteed to run if the app starts 
   User.findByPk(1)
     .then(user => {
-      req.user = user;
+      req.user = user; //adding a new field to the request
       next();
     })
     .catch(err => console.log(err));
@@ -37,19 +39,19 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' }); // on delete any product deleted with the user will be deleted
 User.hasMany(Product);
 User.hasOne(Cart);
-Cart.belongsTo(User);
+Cart.belongsTo(User); //one direction is enough
 Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem }); //many to many relationship
 Order.belongsTo(User);
 User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
-  // .sync({ force: true })
-  .sync()
+  // .sync({ force: true }) to override table
+  .sync()  //syncs models and relations to DB
   .then(result => {
     return User.findByPk(1);
     // console.log(result);
